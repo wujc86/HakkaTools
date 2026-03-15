@@ -1,4 +1,4 @@
-const HAKKA_DICT = {
+export const HAKKA_DICT = {
   "包": {
     "四縣": [
       "bauˊ"
