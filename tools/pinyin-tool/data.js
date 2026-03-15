@@ -1,4 +1,3 @@
-<script>
 const HAKKA_DICT = {
   "包": {
     "四縣": [
@@ -86045,5 +86044,3 @@ const HAKKA_DICT = {
     ]
   }
 };
-
-</script>
