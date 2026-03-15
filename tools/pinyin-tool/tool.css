@@ -1,0 +1,22 @@
+#pinyin-tool-root h1 { color: #2d3436; margin-bottom: 5px; }
+#pinyin-tool-root .card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 25px; }
+#pinyin-tool-root .section-title { font-weight: bold; color: #6c5ce7; margin-bottom: 15px; font-size: 1.1rem; }
+
+/* 輸入框 */
+#pinyin-tool-root .main-input { width: 100%; padding: 12px; font-size: 1.1rem; border: 2px solid #eee; border-radius: 8px; outline: none; transition: 0.3s; }
+#pinyin-tool-root .main-input:focus { border-color: #6c5ce7; }
+
+/* 腔調按鈕 */
+#pinyin-tool-root .filter-bar { display: flex; align-items: center; gap: 20px; margin-top: 15px; flex-wrap: wrap; }
+#pinyin-tool-root .action-btn { padding: 6px 12px; border: 1px solid #6c5ce7; background: transparent; color: #6c5ce7; border-radius: 4px; cursor: pointer; }
+#pinyin-tool-root .action-btn:hover { background: #6c5ce7; color: white; }
+
+/* 上傳區 */
+#pinyin-tool-root .upload-zone { border: 2px dashed #6c5ce7; padding: 40px; text-align: center; border-radius: 12px; cursor: pointer; background: #fcfbff; transition: 0.3s; }
+#pinyin-tool-root .upload-zone:hover { background: #f3f0ff; }
+
+/* 拼音結果區塊 */
+#pinyin-tool-root .dialect-block { border: 1px solid #eee; border-radius: 8px; margin-top: 20px; overflow: hidden; }
+#pinyin-tool-root .dialect-name { padding: 10px 15px; color: white; font-weight: bold; }
+#pinyin-tool-root .char-pool { display: flex; flex-wrap: wrap; padding: 15px; gap: 10px; }
+#pinyin-tool-root .char-item { border: 1px solid #f0f0f0; padding: 8px; border-radius: 6px; text-align: center; min-width: 60px; }

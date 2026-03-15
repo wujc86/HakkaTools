@@ -1,0 +1,44 @@
+<div id="pinyin-tool-root">
+    <div class="tool-header">
+        <h1>客語拼音智慧處理工具</h1>
+        <p class="subtitle">支援多腔調查詢與 Excel 批次產製</p>
+    </div>
+
+    <section class="card">
+        <div class="section-title">🔍 快速查詢</div>
+        <input type="text" id="chineseInput" placeholder="在此輸入文字，例如：敘利亞" class="main-input">
+        
+        <div class="filter-bar">
+            <div class="btn-group">
+                <button class="action-btn" id="selectAllBtn">全選腔調</button>
+                <button class="action-btn" id="deselectAllBtn">全取消</button>
+            </div>
+            <div id="dialectFilters" class="checkbox-group"></div>
+        </div>
+
+        <div id="results" class="results-area"></div>
+    </section>
+
+    <section class="card">
+        <div class="section-title">📚 補充參考資料庫</div>
+        <div class="upload-zone" id="refDropZone">
+            <span class="upload-icon">📖</span>
+            <p>點擊或拖拽上傳參考資料庫 (Excel)</p>
+            <input type="file" id="refFile" accept=".xlsx, .xls" hidden>
+        </div>
+    </section>
+
+    <section class="card">
+        <div class="section-title">📁 Excel 批次處理</div>
+        <div class="upload-zone" id="dropZone">
+            <span class="upload-icon">📄</span>
+            <p>點擊或拖拽待處理 Excel 檔案</p>
+            <input type="file" id="excelFile" accept=".xlsx, .xls" hidden>
+        </div>
+        <div id="columnSelectionZone" class="config-panel" style="display:none">
+            <p>請選擇包含華語的欄位：</p>
+            <select id="targetColumn" class="styled-select"></select>
+            <button id="processExcelBtn" class="process-btn">產製拼音並下載 Excel</button>
+        </div>
+    </section>
+</div>
