@@ -17,7 +17,10 @@ let root = null;
 
 export function init() {
   root = document.querySelector(".hakka-align-tool");
-  if (!root) return;
+  if (!root) {
+    console.error("找不到 .hakka-align-tool");
+    return;
+  }
 
   bindEvents();
   loadFixedData();
@@ -27,16 +30,24 @@ function bindEvents() {
   const searchInput = root.querySelector("#searchInput");
   const btnLoadMore = root.querySelector("#btnLoadMore");
   const resultsArea = root.querySelector("#resultsArea");
+  const dialectCheckboxes = root.querySelectorAll(".dialect-cb");
 
-  searchInput?.addEventListener("input", filterData);
-  btnLoadMore?.addEventListener("click", renderNextBatch);
+  if (searchInput) {
+    searchInput.addEventListener("input", filterData);
+  }
 
-  root.querySelectorAll(".dialect-cb").forEach((cb) => {
+  if (btnLoadMore) {
+    btnLoadMore.addEventListener("click", renderNextBatch);
+  }
+
+  dialectCheckboxes.forEach((cb) => {
     cb.addEventListener("change", filterData);
   });
 
-  resultsArea?.addEventListener("mouseover", handleTokenHover);
-  resultsArea?.addEventListener("mouseout", handleTokenLeave);
+  if (resultsArea) {
+    resultsArea.addEventListener("mouseover", handleTokenHover);
+    resultsArea.addEventListener("mouseout", handleTokenLeave);
+  }
 }
 
 async function loadFixedData() {
@@ -56,22 +67,32 @@ async function loadFixedData() {
   } catch (error) {
     console.error("固定資料載入失敗：", error);
     setStatus("資料載入失敗，請確認 JSON 檔案路徑是否正確。");
-    root.querySelector("#resultsArea").innerHTML = `
-      <div class="empty-state">
-        無法載入資料檔：客語辭典例句對應結果.json
-      </div>
-    `;
+
+    const resultsArea = root.querySelector("#resultsArea");
+    if (resultsArea) {
+      resultsArea.innerHTML = `
+        <div class="empty-state">
+          無法載入資料檔：客語辭典例句對應結果.json
+        </div>
+      `;
+    }
   }
 }
 
 function loadDataSuccess(data) {
+  const searchInput = root.querySelector("#searchInput");
+
   if (!Array.isArray(data)) {
     setStatus("資料格式錯誤：根層必須是陣列。");
-    root.querySelector("#resultsArea").innerHTML = `
-      <div class="empty-state">
-        JSON 格式錯誤：根層必須是陣列
-      </div>
-    `;
+
+    const resultsArea = root.querySelector("#resultsArea");
+    if (resultsArea) {
+      resultsArea.innerHTML = `
+        <div class="empty-state">
+          JSON 格式錯誤：根層必須是陣列
+        </div>
+      `;
+    }
     return;
   }
 
@@ -79,14 +100,19 @@ function loadDataSuccess(data) {
   filteredData = [];
   currentRenderedCount = 0;
 
-  root.querySelector("#searchInput").disabled = false;
-  setStatus(`資料載入完成，共 ${allData.length} 筆資料`);
+  if (searchInput) {
+    searchInput.disabled = false;
+  }
 
+  setStatus(`資料載入完成，共 ${allData.length} 筆資料`);
   filterData();
 }
 
 function setStatus(message) {
-  root.querySelector("#statusMsg").textContent = message;
+  const statusMsg = root.querySelector("#statusMsg");
+  if (statusMsg) {
+    statusMsg.textContent = message;
+  }
 }
 
 function getActiveDialects() {
@@ -102,6 +128,11 @@ function safeArray(value) {
 function filterData() {
   const resultsArea = root.querySelector("#resultsArea");
   const loadMoreArea = root.querySelector("#loadMoreArea");
+  const searchInput = root.querySelector("#searchInput");
+
+  if (!resultsArea || !loadMoreArea || !searchInput) {
+    return;
+  }
 
   if (!Array.isArray(allData) || allData.length === 0) {
     resultsArea.innerHTML = `<div class="empty-state">目前沒有資料</div>`;
@@ -109,7 +140,7 @@ function filterData() {
     return;
   }
 
-  const keyword = root.querySelector("#searchInput").value.trim().toLowerCase();
+  const keyword = searchInput.value.trim().toLowerCase();
   const activeDialects = getActiveDialects();
 
   filteredData = allData.filter((item) => {
@@ -131,7 +162,11 @@ function filterData() {
 
     const headword = String(item?.metadata?.headword || "").toLowerCase();
 
-    return rawHk.includes(keyword) || rawCn.includes(keyword) || headword.includes(keyword);
+    return (
+      rawHk.includes(keyword) ||
+      rawCn.includes(keyword) ||
+      headword.includes(keyword)
+    );
   });
 
   if (keyword) {
@@ -149,6 +184,10 @@ function renderNextBatch() {
   const resultsArea = root.querySelector("#resultsArea");
   const loadMoreArea = root.querySelector("#loadMoreArea");
   const btnLoadMore = root.querySelector("#btnLoadMore");
+
+  if (!resultsArea || !loadMoreArea || !btnLoadMore) {
+    return;
+  }
 
   if (filteredData.length === 0) {
     resultsArea.innerHTML = `<div class="empty-state">沒有符合的資料</div>`;
@@ -210,8 +249,12 @@ function createResultCard(item) {
   `).join("");
 
   let pinyinHtml = "";
-  if (pinyinVal) pinyinHtml += `<span class="pinyin-badge">調值：${escapeHtml(pinyinVal)}</span>`;
-  if (pinyinType) pinyinHtml += `<span class="pinyin-badge">調型：${escapeHtml(pinyinType)}</span>`;
+  if (pinyinVal) {
+    pinyinHtml += `<span class="pinyin-badge">調值：${escapeHtml(pinyinVal)}</span>`;
+  }
+  if (pinyinType) {
+    pinyinHtml += `<span class="pinyin-badge">調型：${escapeHtml(pinyinType)}</span>`;
+  }
 
   card.innerHTML = `
     <div class="card-meta-header">
@@ -254,15 +297,19 @@ function handleTokenHover(event) {
   const alignment = parseAlignment(card.dataset.alignment);
 
   if (lang === "hk") {
-    alignment.filter((pair) => Number(pair.hk_id) === tokenId).forEach((pair) => {
-      const target = root.querySelector(`#${cssEscape(`${uid}-cn-${pair.cn_id}`)}`);
-      if (target) target.classList.add("active");
-    });
+    alignment
+      .filter((pair) => Number(pair.hk_id) === tokenId)
+      .forEach((pair) => {
+        const target = root.querySelector(`#${cssEscape(`${uid}-cn-${pair.cn_id}`)}`);
+        if (target) target.classList.add("active");
+      });
   } else {
-    alignment.filter((pair) => Number(pair.cn_id) === tokenId).forEach((pair) => {
-      const target = root.querySelector(`#${cssEscape(`${uid}-hk-${pair.hk_id}`)}`);
-      if (target) target.classList.add("active");
-    });
+    alignment
+      .filter((pair) => Number(pair.cn_id) === tokenId)
+      .forEach((pair) => {
+        const target = root.querySelector(`#${cssEscape(`${uid}-hk-${pair.hk_id}`)}`);
+        if (target) target.classList.add("active");
+      });
   }
 }
 
@@ -281,7 +328,10 @@ function handleTokenLeave(event) {
 function clearHighlight(uid) {
   const card = root.querySelector(`.result-card[data-uid="${uid}"]`);
   if (!card) return;
-  card.querySelectorAll(".token.active").forEach((el) => el.classList.remove("active"));
+
+  card.querySelectorAll(".token.active").forEach((el) => {
+    el.classList.remove("active");
+  });
 }
 
 function parseAlignment(value) {
