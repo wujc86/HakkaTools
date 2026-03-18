@@ -1,0 +1,270 @@
+@font-face {
+  font-family: "CMEX-Hakka";
+  src: url("./assets/fonts/CMEX客黑體.ttf") format("truetype");
+  font-display: swap;
+}
+
+:root {
+  --color-bg: #f8f9fa;
+  --color-panel: #ffffff;
+  --color-border: #e5e7eb;
+  --color-muted: #6b7280;
+  --color-shadow: rgba(0, 0, 0, 0.08);
+
+  --color-sixian: #e74c3c;
+  --color-hailu: #3498db;
+  --color-dapu: #2ecc71;
+  --color-raoping: #9b59b6;
+  --color-zhaoan: #f39c12;
+  --color-nansi: #34495e;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-bg);
+  padding-bottom: 80px;
+  font-family:
+    "CMEX-Hakka",
+    "Noto Sans TC",
+    "Microsoft JhengHei",
+    "PMingLiU-ExtB",
+    "MingLiU-ExtB",
+    "HanaMinB",
+    sans-serif;
+}
+
+.tool-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tool-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.tool-subtitle {
+  color: var(--color-muted);
+  font-size: 0.95rem;
+}
+
+.search-container {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #ffffff;
+  padding: 20px 0 16px;
+  box-shadow: 0 4px 12px var(--color-shadow);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.file-load-section {
+  margin-bottom: 14px;
+  padding: 14px 16px;
+  background-color: #eaf4ff;
+  border: 1px solid #bfdcff;
+  border-radius: 10px;
+}
+
+.file-load-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.file-load-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.current-data-source {
+  color: #495057;
+  font-size: 0.9rem;
+}
+
+.dialect-filters {
+  padding: 10px 12px;
+  background-color: #f1f3f5;
+  border-radius: 8px;
+  display: flex;
+  gap: 12px 18px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.form-check-input:checked {
+  background-color: #2c3e50;
+  border-color: #2c3e50;
+}
+
+.status-row {
+  margin-top: 8px;
+}
+
+.status-msg {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+.result-card {
+  background: var(--color-panel);
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  overflow: hidden;
+}
+
+.result-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.card-meta-header {
+  background-color: #fafafa;
+  border-bottom: 1px solid #eee;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+.dialect-badge {
+  font-size: 0.85rem;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.pinyin-badge {
+  background-color: #e9ecef;
+  color: #495057;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  border: 1px solid #dee2e6;
+  margin-right: 5px;
+  font-family: Consolas, Monaco, "Courier New", monospace;
+}
+
+.bg-sixian { background-color: var(--color-sixian); }
+.bg-hailu { background-color: var(--color-hailu); }
+.bg-dapu { background-color: var(--color-dapu); }
+.bg-raoping { background-color: var(--color-raoping); }
+.bg-zhaoan { background-color: var(--color-zhaoan); }
+.bg-nansi { background-color: var(--color-nansi); }
+
+.card-body-custom {
+  padding: 20px;
+}
+
+.sent-row {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 12px;
+}
+
+.sent-row:last-child {
+  margin-bottom: 0;
+}
+
+.sent-label {
+  width: 52px;
+  font-weight: 700;
+  color: #999;
+  font-size: 0.92rem;
+  user-select: none;
+  padding-top: 6px;
+  text-align: right;
+  margin-right: 14px;
+  flex-shrink: 0;
+}
+
+.sent-content {
+  flex: 1;
+  line-height: 1.9;
+}
+
+.token {
+  display: inline-block;
+  padding: 4px 8px;
+  margin: 2px;
+  border-radius: 6px;
+  cursor: default;
+  transition: all 0.1s;
+  border: 1px solid transparent;
+  font-size: 1.25rem;
+  font-family:
+    "CMEX-Hakka",
+    "Noto Sans TC",
+    "Microsoft JhengHei",
+    "PMingLiU-ExtB",
+    "MingLiU-ExtB",
+    "HanaMinB",
+    sans-serif;
+}
+
+.hk-token {
+  background-color: #fff0f0;
+  color: #c0392b;
+  border-bottom: 2px solid #fadbd8;
+}
+
+.cn-token {
+  background-color: #f0f4f8;
+  color: #2980b9;
+  border-bottom: 2px solid #d6eaf8;
+}
+
+.token.active {
+  background-color: #ffeb3b !important;
+  color: #000 !important;
+  font-weight: 900;
+  border-color: #fbc02d !important;
+  transform: scale(1.08);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--color-muted);
+  padding: 48px 0;
+}
+
+.d-none {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  .tool-title {
+    font-size: 1.35rem;
+  }
+
+  .token {
+    font-size: 1.08rem;
+  }
+
+  .sent-label {
+    width: 44px;
+    margin-right: 10px;
+  }
+
+  .card-meta-header {
+    padding: 12px 14px;
+  }
+
+  .card-body-custom {
+    padding: 14px;
+  }
+}
